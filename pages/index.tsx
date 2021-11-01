@@ -5,10 +5,8 @@ import HomePageTemplate from '../src/template/home-page-template'
 import { userHasToken } from '../src/utils/authentication'
 
 const Home: NextPage = (props) => {
-  const is_valid = userHasToken()
-  return (
-    is_valid ? <HomePageTemplate /> : <Login />
-  )
+  const authenticated = userHasToken()
+  return authenticated ? <HomePageTemplate /> : <Login />
 }
 
 export default Home
