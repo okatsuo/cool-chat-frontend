@@ -1,18 +1,13 @@
-import { useQuery, useSubscription } from '@apollo/client'
-import type { NextPage } from 'next'
-import Head from 'next/head'
+import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next'
+import { Login } from '../src/components/login'
 import { NEW_MESSAGE } from '../src/graphql/subscriptions/message'
+import HomePageTemplate from '../src/template/home-page-template'
+import { userHasToken } from '../src/utils/authentication'
 
-const Home: NextPage = () => {
-  const { data, loading, error } = useSubscription(NEW_MESSAGE)
-  if (loading) return <p>Loading...</p>
-  console.log(data)
-  console.log(error)
+const Home: NextPage = (props) => {
+  const is_valid = userHasToken()
   return (
-      <Head>
-        <title>Cool-Chat</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    is_valid ? <HomePageTemplate /> : <Login />
   )
 }
 
