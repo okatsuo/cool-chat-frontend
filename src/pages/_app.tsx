@@ -5,6 +5,7 @@ import { ApolloProvider } from '@apollo/client'
 import { client } from '../graphql/main'
 import Head from 'next/head'
 import { AuthProvider } from '../contexts/authentication'
+import { CssBaseline } from '@mui/material'
 
 function SafeHydrate({ children }: any) {
   return (
@@ -23,6 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <title>Cool-Chat</title>
             <link rel="icon" href="/favicon.ico" />
           </Head>
+          <CssBaseline />
           <Component {...pageProps} />
         </AuthProvider>
       </ApolloProvider>

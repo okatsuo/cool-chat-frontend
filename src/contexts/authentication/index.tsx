@@ -13,20 +13,16 @@ export const AuthProvider = ({ children }: AuthProviderInterface) => {
   const router = useRouter()
 
   const signIn = async ({ email, password }: SignInInterface) => {
-    try {
-      const { data: { login: { token, user } } } = await client.query<UserLoginInterface>({
-        query: USER_LOGIN,
-        variables: {
-          email,
-          password
-        }
-      })
-      setLoggedUser({ token, user })
-      localStorage.setItem(localstorage.user_token, token)
-      await router.push(routers.home)
-    } catch (error) {
-      console.error(error)
-    }
+    const { data: { login: { token, user } } } = await client.query<UserLoginInterface>({
+      query: USER_LOGIN,
+      variables: {
+        email,
+        password
+      }
+    })
+    setLoggedUser({ token, user })
+    localStorage.setItem(localstorage.user_token, token)
+    await router.push(routers.home)
   }
 
   const logOut = async () => {
