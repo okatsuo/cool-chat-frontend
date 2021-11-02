@@ -10,13 +10,11 @@ export const Login = () => {
       const { data } = await client.query({
         query: USER_LOGIN,
         variables: {
-          fields: {
-            email: e.target.email.value,
-            password: e.target.password.value
-          }
+          email: e.target.email.value,
+          password: e.target.password.value
         }
       })
-      setUserToken(data)
+      setUserToken(data.login.token)
       await Router.push('/')
     } catch (error) {
       console.error(error)
