@@ -1,24 +1,18 @@
 import Router from 'next/router'
+import { useContext } from 'react'
+import { AuthContext } from '../../contexts/authentication'
 import { client } from '../../graphql/main'
 import { USER_LOGIN } from '../../graphql/queries/login'
 import { setUserToken } from '../../utils/authentication'
 
 export const Login = () => {
+  const { signIn } = useContext(AuthContext)
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    try {
-      const { data } = await client.query({
-        query: USER_LOGIN,
-        variables: {
-          email: e.target.email.value,
-          password: e.target.password.value
-        }
-      })
-      setUserToken(data.login.token)
-      await Router.push('/')
-    } catch (error) {
-      console.error(error)
-    }
+    signIn({
+      email: e.target.email.value,
+      password: e.target.password.value
+    })
   }
   return (
     <div>
