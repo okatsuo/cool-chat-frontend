@@ -21,8 +21,8 @@ function SafeHydrate({ children }: any) {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SafeHydrate>
-      <ApolloProvider client={client}>
-        <ContextApiProviders>
+      <ContextApiProviders>
+        <ApolloProvider client={client}>
           <Head>
             <title>Cool-Chat</title>
             <link rel="icon" href="/favicon.ico" />
@@ -31,8 +31,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           <ThemeProvider theme={theme}>
             <Component {...pageProps} />
           </ThemeProvider>
-        </ContextApiProviders>
-      </ApolloProvider>
+        </ApolloProvider>
+      </ContextApiProviders>
     </SafeHydrate>
   )
 }
