@@ -1,11 +1,12 @@
 import type { NextPage } from 'next'
+import { useContext } from 'react'
 import { Login } from '../components/login'
+import { AuthContext } from '../contexts/authentication'
 import HomePageTemplate from '../template/home-page-template'
-import { userHasToken } from '../utils/authentication'
 
 const Home: NextPage = (props) => {
-  const authenticated = userHasToken()
-  return authenticated ? <HomePageTemplate /> : <Login />
+  const { loggedUser } = useContext(AuthContext)
+  return loggedUser ? <HomePageTemplate /> : <Login />
 }
 
 export default Home

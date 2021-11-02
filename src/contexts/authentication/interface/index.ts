@@ -21,6 +21,7 @@ export interface LoggedUserInterface {
 }
 
 export interface AuthContextInterface {
-  user: LoggedUserInterface | null
+  loggedUser: LoggedUserInterface | null
   signIn: (signin_data: SignInInterface) => Promise<void>
+  logOut: () => Promise<void>
 }

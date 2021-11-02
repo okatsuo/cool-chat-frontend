@@ -1,14 +1,17 @@
-import Router from 'next/router';
-import { createContext, useState } from 'react';
+import { useRouter } from 'next/router';
+import { createContext, useEffect, useState } from 'react';
 import { client } from '../../graphql/main';
 import { USER_LOGIN } from '../../graphql/queries/login';
 import { UserLoginInterface } from '../../graphql/queries/login/interface';
+import { localstorage, routers } from '../../utils/constants';
 import { AuthContextInterface, AuthProviderInterface, LoggedUserInterface, SignInInterface } from './interface';
 
 export const AuthContext = createContext({} as AuthContextInterface)
 
 export const AuthProvider = ({ children }: AuthProviderInterface) => {
-  const [user, setUser] = useState<LoggedUserInterface | null>(null)
+  const [loggedUser, setLoggedUser] = useState<LoggedUserInterface | null>(null)
+  const router = useRouter()
+
   const signIn = async ({ email, password }: SignInInterface) => {
     try {
       const { data: { login: { token, user } } } = await client.query<UserLoginInterface>({
@@ -18,12 +21,27 @@ export const AuthProvider = ({ children }: AuthProviderInterface) => {
           password
         }
       })
-      setUser({ token, user })
-      await Router.push('/')
+      setLoggedUser({ token, user })
+      localStorage.setItem(localstorage.user_token, token)
+      await router.push(routers.home)
     } catch (error) {
       console.error(error)
     }
   }
-  console.log(user)
-  return (<AuthContext.Provider value={{ user, signIn }}>{children}</AuthContext.Provider>)
+
+  const logOut = async () => {
+    localStorage.removeItem(localstorage.user_token)
+    setLoggedUser(null)
+    await router.push(routers.home)
+  }
+
+  return (
+    <AuthContext.Provider
+      value={{
+        loggedUser,
+        signIn,
+        logOut
+      }}>
+      {children}
+    </AuthContext.Provider>)
 }
