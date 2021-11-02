@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { UserProfileInterface } from '../../../graphql/queries/user-profile/interface';
 
 export interface AuthProviderInterface {
   children: ReactNode
@@ -21,7 +22,7 @@ export interface LoggedUserInterface {
 }
 
 export interface AuthContextInterface {
-  loggedUser: LoggedUserInterface | null
+  loggedUser: UserProfileInterface | null
   signIn: (signin_data: SignInInterface) => Promise<void>
   logOut: () => Promise<void>
 }

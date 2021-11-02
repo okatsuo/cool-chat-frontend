@@ -10,7 +10,7 @@ import { AccountMenuContext, AccountMenuProvider } from '../../contexts/account-
 export const MenuAppBar = () => {
   const { loggedUser, logOut } = useContext(AuthContext)
   const { handleClick, anchor, handleClose, open } = useContext(AccountMenuContext)
-  const { name, email } = loggedUser!.user
+  const { name, email } = loggedUser!
   return (
     <Box sx={{ flexGrow: 1, mb: 2 }}>
       <AppBar position="static">
