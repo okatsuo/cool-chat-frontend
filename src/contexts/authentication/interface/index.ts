@@ -9,7 +9,18 @@ export interface SignInInterface  {
   password: string
 }
 
+export interface LoggedUserInterface {
+  token: string,
+  user: {
+    id: number
+    name: string
+    email: string
+    created_at: Date
+    updated_at: Date
+  }
+}
+
 export interface AuthContextInterface {
-  user: string
+  user: LoggedUserInterface | null
   signIn: (signin_data: SignInInterface) => Promise<void>
 }
