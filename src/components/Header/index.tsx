@@ -2,13 +2,14 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/authentication';
-import { Avatar } from '@mui/material';
+import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
+import { AccountMenuContext, AccountMenuProvider } from '../../contexts/account-menu';
 
 export const MenuAppBar = () => {
-  const { loggedUser } = useContext(AuthContext)
+  const { loggedUser, logOut } = useContext(AuthContext)
+  const { handleClick, anchor, handleClose, open } = useContext(AccountMenuContext)
   const { name, email } = loggedUser!.user
   return (
     <Box sx={{ flexGrow: 1, mb: 2 }}>
@@ -17,17 +18,30 @@ export const MenuAppBar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Cool chat
           </Typography>
-          <Avatar />
-          <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            ml: 1
-          }}>
-            <Typography>{name}</Typography>
-            <Typography>{email}</Typography>
-          </Box>
+          <IconButton>
+            <Avatar />
+          </IconButton>
+          <span style={{ cursor: 'pointer' }} onClick={handleClick}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                ml: 1
+              }}
+            >
+              <Typography>{name}</Typography>
+              <Typography>{email}</Typography>
+            </Box>
+          </span>
         </Toolbar>
+        <Menu
+          anchorEl={anchor}
+          open={open}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={logOut}>Logout</MenuItem>
+        </Menu>
       </AppBar>
-    </Box>
+    </Box >
   );
 }

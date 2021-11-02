@@ -7,6 +7,8 @@ import Head from 'next/head'
 import { AuthProvider } from '../contexts/authentication'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import { theme } from '../styles/theme'
+import { AccountMenuProvider } from '../contexts/account-menu'
+import { ContextApiProviders } from '../contexts'
 
 function SafeHydrate({ children }: any) {
   return (
@@ -20,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SafeHydrate>
       <ApolloProvider client={client}>
-        <AuthProvider>
+        <ContextApiProviders>
           <Head>
             <title>Cool-Chat</title>
             <link rel="icon" href="/favicon.ico" />
@@ -29,7 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <ThemeProvider theme={theme}>
             <Component {...pageProps} />
           </ThemeProvider>
-        </AuthProvider>
+        </ContextApiProviders>
       </ApolloProvider>
     </SafeHydrate>
   )
