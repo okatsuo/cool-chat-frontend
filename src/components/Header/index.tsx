@@ -39,7 +39,7 @@ export const MenuAppBar = () => {
           open={open}
           onClose={handleClose}
         >
-          <MenuItem onClick={logOut}>Logout</MenuItem>
+          <MenuItem onClick={() => { handleClose(); logOut() }}>Logout</MenuItem>
         </Menu>
       </AppBar>
     </Box >
